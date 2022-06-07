@@ -10,6 +10,7 @@ const app = express();
 
 app.use('/graphql', graphqlHTTP({ 
     schema,
+    //set to true
     graphiql: process.env.NODE_ENV === 'development'
 
 }));
