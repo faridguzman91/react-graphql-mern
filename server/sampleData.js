@@ -3,42 +3,32 @@
 const projects = [
     {
         id: 1,
-        clientId: '1',
         name: 'eCommerce Website',
         description: 'This is a sample project',
-        startDate: '2019-01-01',
         status: 'In Progress',
     },
     {
         id: 2,
-        clientId: '2',
         name: 'Dating App',
         description: 'This is a sample project',
-        startDate: '2019-01-01',
         status: 'In Progress',
     },
     {
         id: 3,
-        clientId: '3',
         name: 'Social Network',
         description: 'This is a sample project',
-        startDate: '2019-01-01',
         status: 'In Progress',
     },
     {
         id: 4,
-        clientId: '4',
         name: 'SaaS App',
         description: 'This is a sample project',
-        startDate: '2019-01-01',
         status: 'In Progress',
     },
     {
         id: 5,
-        clientId: '5',
         name: 'Food Delivery App',
         description: 'This is a sample project',
-        startDate: '2019-01-01',
         status: 'In Progress',
     },
 
