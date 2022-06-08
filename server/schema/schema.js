@@ -4,13 +4,13 @@ const { projects, clients } = require("../sampleData.js");
 const Project = require("../models/Project");
 const Client = require("../models/Client");
 
-
 const {
   GraphQLObjectType,
   GraphQLID,
   GraphQLString,
   GraphQLSchema,
   GraphQLList,
+  GraphQLNonNull,
 } = require("graphql");
 
 const ClientType = new GraphQLObjectType({
@@ -54,25 +54,59 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Project.findById(args.id);
+      }
     },
-    clients: {
-      type: new GraphQLList(ClientType),
-      resolve(parent, args) {
-        return Client.find();
+      clients: {
+        type: new GraphQLList(ClientType),
+        resolve(parent, args) {
+          return Client.find();
+        },
+      },
+      client: {
+        type: ClientType,
+        args: { id: { type: GraphQLID } },
+        resolve(parent, args) {
+          return Client.findById(args.id);
+        },
       },
     },
-    client: {
-      type: ClientType,
-      args: { id: { type: GraphQLID } },
-      resolve(parent, args) {
-        return Client.findById(args.id);
-      },
-    },
-  },
-}
-});
+  });
 
+//mutations
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+      // add client
+    addClient: {
+      type: ClientType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        email: { type: GraphQLNonNull(GraphQLString) },
+        phone: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        const client = new Client({
+          name: args.name,
+          email: args.email,
+          phone: args.phone,
+        });
+        return client.save();
+      },
+    },
+    //delete client
+    deleteClient: {
+        type: ClientType,
+        args: {
+            id: { type: GraphQLNonNull(GraphQLID) }
+  },
+    resolve(parent, args) {
+        return Client.findByIdAndRemove(args.id);
+    }
+    },
+}
+})
 
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation,
 });
