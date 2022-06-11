@@ -1,5 +1,18 @@
 import { gql } from '@apollo/client';
 
+//create mutation to add client to graphql server
+
+const ADD_CLIENT = gql`
+    mutation addClient($name: String!, $email: String!, $phone: String!) {
+        addClient(name: $name, email: $email, phone: $phone) {
+            id
+            name
+            email
+            phone
+        }
+    }
+`;
+
 //DELETE CLIENT MUTATION by ID
 
 const DELETE_CLIENTS = gql`
@@ -13,4 +26,4 @@ const DELETE_CLIENTS = gql`
     }
 `;
 
-export {DELETE_CLIENTS};
+export {ADD_CLIENT, DELETE_CLIENTS};

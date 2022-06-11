@@ -18,7 +18,22 @@ export default function ClientRow({ client }) {
         //delete client without refreshing the page
         refetchQueries : [{
             query : GET_CLIENTS
-        }]
+        }],
+
+        // update cache after deleting client
+
+        update : (cache) => {
+            const { clients } = cache.readQuery({
+                query : GET_CLIENTS
+            });
+            cache.writeQuery({
+                query : GET_CLIENTS,
+                data : {
+                    clients : clients.filter(client => client.id !== deleteClient.id)
+                }
+            })
+        }
+
 
     });
 
