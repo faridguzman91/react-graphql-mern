@@ -1,21 +1,25 @@
 import { gql, useQuery } from "@apollo/client";
 import ClientRow from './ClientRow';
+import Spinner from '../components/Spinner';
+import { GET_CLIENTS} from '../queries/clientQueries';
 
-const GET_CLIENTS = gql`
-  query {
-    clients {
-      id
-      name
-      email
-      phone
-    }
-  }
-`;
+//create query to get all clients from graphql server
+
+// const GET_CLIENTS = gql`
+//   query {
+//     clients {
+//       id
+//       name
+//       email
+//       phone
+//     }
+//   }
+// `;
 
 function Clients() {
   const { loading, error, data } = useQuery(GET_CLIENTS);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner />;
   if (error) return <p>Error :(</p>;
 
   return <>
@@ -34,7 +38,7 @@ function Clients() {
             {data.clients.map(client => (
                 <ClientRow key={client.id} client={client} />
             ))}
-            
+
         </tbody>
     </table>
   )};</>;
